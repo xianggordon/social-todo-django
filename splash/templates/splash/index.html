@@ -1,0 +1,88 @@
+<!--splash/index -->
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <h1>Social todo app - cpsc 113</h1>
+        <h3>By Gordon<h3>
+    </head>
+    <body>
+        <a href='/user/logout' class='logout'></a>
+        {% if not user.is_authenticated %}
+            <h2>Login</h2>
+            
+                {% if errors %}
+                    <div style="color:red" class="validation-error">{{errors}}</div>
+                {% endif %}
+                
+                <div id="login">
+                    <form class="login" action="/user/login" method="POST">
+                    {% csrf_token %}
+                        <h3>sign in to see your tasks</h3>
+                        {{login}}
+                        <button type="submit"  class="log-in-submit">sign in </button>
+                    </form>
+                </div>
+    
+                <div id="register">
+                  <form action="/user/register" method="POST" class="register">
+                    {% csrf_token %}
+                    <h2>create your account</h2>
+                    {{register}}
+                    <button class="sign-up-submit" type="submit">register</button>
+                  </form>
+                </div>
+    
+            {% else %}
+            <a href='/user/logout' class='logout'>Logout</a>
+            <h1>Welcome, {{request.user.first_name}}</h1>
+    
+      <div id="new-task-form">
+        <form action="/task/create" method="POST" class="create-task">
+          {% csrf_token %}
+          <h2>new task </h2>
+          {{new_task}}
+          <button type="submit" class="create-task-submit">add task ;</button>
+        </form>
+      </div>
+    
+    
+    
+      <div>
+        {% if tasks %}
+          {% for task in tasks %}
+            {% if task.isComplete %}
+              <div class="tasks-list-item complete-task">
+              <h2><span class="task-title"><s>{{task.title}}</s> ;</span></h2>
+              <h3><span class="task-description"><s><i>{{task.description}}</i></s></span></h3>
+              <form action='/task/toggle/{{task.id}}' method="POST">
+                {% csrf_token %}
+                <button type="submit" name="toggle-task" class="toggle-task">undo ;</button>
+              </form>
+            {% else %}
+              <div class="tasks-list-item">
+              <h2><span class="task-title">{{task.title}}</span></h2>
+              <h3><span class="task-description"><i>{{task.description}}</i></span></h3>
+              <form action='/task/toggle/{{task.id}}' method="POST">
+                {% csrf_token %}
+                <button type="submit" name="toggle-task" class="toggle-task">complete ;</button>
+              </form>
+            {% endif %}
+                {% if task.owner == user %}
+                  <form action='/task/delete/{{task.id}}' method="POST">
+                    {% csrf_token %}
+                    <button type="submit" name="delete-task" class="delete-task">delete ;</button>
+                  </form>
+                {% endif %}
+              </div>
+          {% endfor %}
+          
+          {% else %}
+            <h2>no tasks to show ;</h2>
+          {% endif %}
+        {% endif %}
+       </div>
+    </body>
+</html>
+
+    
