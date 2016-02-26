@@ -17,9 +17,9 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^', include('splash.urls')), #root
     url(r'^tasks/', include('tasks.urls')),  #always use include
     url(r'^polls/', include('polls.urls')), #testing using polls
     url(r'^admin/', admin.site.urls),
-    url(r'', include('splash.urls')), #root
 ]
 

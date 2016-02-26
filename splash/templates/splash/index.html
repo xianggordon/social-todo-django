@@ -3,38 +3,38 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <h1>Social todo app - cpsc 113</h1>
-        <h3>By Gordon<h3>
+       <title>CPSC113 Todo</title>
     </head>
     <body>
-        <a href='/user/logout' class='logout'></a>
+       <h1>CPSC113 Todo 2</h1>
+        <h3>By Gordon<h3>
+        <a href='/logout' class='logout'></a>
+        
         {% if not user.is_authenticated %}
-            <h2>Login</h2>
-            
-                {% if errors %}
-                    <div style="color:red" class="validation-error">{{errors}}</div>
-                {% endif %}
-                
                 <div id="login">
-                    <form class="login" action="/user/login" method="POST">
+                    <form class="login" action="/login/" method="POST">
                     {% csrf_token %}
-                        <h3>sign in to see your tasks</h3>
+                        <h2>Sign-in</h2>
                         {{login}}
                         <button type="submit"  class="log-in-submit">sign in </button>
                     </form>
                 </div>
     
                 <div id="register">
-                  <form action="/user/register" method="POST" class="register">
+                  <form action="/register" method="POST" class="register">
                     {% csrf_token %}
-                    <h2>create your account</h2>
+                    <h2>Create your account</h2>
                     {{register}}
                     <button class="sign-up-submit" type="submit">register</button>
                   </form>
                 </div>
-    
+                
+                {% if errors %}
+                    <div style="color:red" class="validation-error">{{errors}}</div>
+                {% endif %}
+                
             {% else %}
-            <a href='/user/logout' class='logout'>Logout</a>
+            <a href='/logout' class='logout'>Logout</a>
             <h1>Welcome, {{request.user.first_name}}</h1>
     
       <div id="new-task-form">
@@ -45,8 +45,7 @@
           <button type="submit" class="create-task-submit">add task ;</button>
         </form>
       </div>
-    
-    
+
     
       <div>
         {% if tasks %}
