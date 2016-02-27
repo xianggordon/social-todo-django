@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import newTaskForm
 from django.contrib.auth.models import User
 from tasks.models import Task
 from django.db.models import Q
 from .forms import loginForm
 from .forms import registerForm
+from .forms import createTaskForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as djangoLogin #login is already a function
 from django.contrib.auth import logout as djangoLogout #logout is already a function
@@ -15,7 +15,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 def index(request):
     if request.user.is_authenticated():
         tasks = Task.objects.filter(Q(owner=request.user) | Q(collaborators=request.user))
-        return render(request, 'splash/index.html', {'user': request.user, 'new_task': newTaskForm, 'tasks': tasks})
+        return render(request, 'splash/index.html', {'user': request.user, 'new_task': createTaskForm, 'tasks': tasks})
     else:
         return render(request, 'splash/index.html', {'login': loginForm(), 'register': registerForm()})
 

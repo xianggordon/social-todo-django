@@ -4,10 +4,10 @@
 <html>
     <head>
        <title>CPSC113 Todo</title>
+       <h1>Social-Todo-App 2</h1>
+        <h3>By Gordon<h3>
     </head>
     <body>
-       <h1>CPSC113 Todo 2</h1>
-        <h3>By Gordon<h3>
         <a href='/logout' class='logout'></a>
         
         {% if not user.is_authenticated %}
@@ -34,7 +34,6 @@
                 {% endif %}
                 
             {% else %}
-            <a href='/logout' class='logout'>Logout</a>
             <h1>Welcome, {{request.user.first_name}}</h1>
     
       <div id="new-task-form">
@@ -80,6 +79,7 @@
             <h2>no tasks to show ;</h2>
           {% endif %}
         {% endif %}
+        <a href='/logout' class='logout'>Logout</a>
        </div>
     </body>
 </html>
