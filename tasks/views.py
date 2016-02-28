@@ -30,3 +30,8 @@ def newTask(request):
                 
     return HttpResponseRedirect('/')  
 
+def delete(request, task_id):
+    if request.method == 'POST':
+        Task.objects.get(id = task_id).delete()
+
+    return HttpResponseRedirect('/')
