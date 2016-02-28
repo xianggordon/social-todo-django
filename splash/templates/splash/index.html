@@ -10,76 +10,82 @@
     <body>
         <a href='/logout' class='logout'></a>
         
+        <!--Log In Page -->
         {% if not user.is_authenticated %}
-                <div id="login">
-                    <form class="login" action="/login/" method="POST">
-                    {% csrf_token %}
-                        <h2>Sign-in</h2>
-                        {{login}}
-                        <button type="submit"  class="log-in-submit">sign in </button>
-                    </form>
-                </div>
+          <div id="login">
+            <form class="login" action="/login/" method="POST">
+              {% csrf_token %}
+              <h2>Sign in</h2>
+                {{login}}
+                <button type="submit"  class="log-in-submit">sign in </button>
+            </form>
+          </div>
     
-                <div id="register">
-                  <form action="/register" method="POST" class="register">
+          <div id="register">
+            <form action="/register" method="POST" class="register">
+              {% csrf_token %}
+              <h2>Create an account</h2>
+              <table>
+                {{register.as_table}}
+              </table>      
+              <button class="sign-up-submit" type="submit">register</button>
+            </form>
+          </div>
+                
+          {% if errors %}
+            <div style="color:red" class="validation-error">{{errors}}</div>
+          {% endif %}
+                
+        <!--Logged in, Task Page -->
+        {% else %}
+          <h1>Welcome, {{request.user.first_name}}</h1>
+    
+          <div id="new-task-form">
+            <form action="/tasks/newTask" method="POST" class="create-task">
+              {% csrf_token %}
+              <h2>new task </h2>
+              {{new_task}}
+              <button type="submit" class="create-task-submit">add task</button>
+            </form>
+          </div>
+          
+          <div>
+          <!--tasks -->
+            {% if tasks %}
+              {% for task in tasks %}
+                {% if task.isComplete %}
+                  <div class="tasks-list-item complete-task">
+                  <h2><span class="task-title"><s>{{task.title}}</s> ;</span></h2>
+                  <h3><span class="task-description"><s><i>{{task.description}}</i></s></span></h3>
+                  <form action='/task/toggle/{{task.id}}' method="POST">
                     {% csrf_token %}
-                    <h2>Create your account</h2>
-                    {{register}}
-                    <button class="sign-up-submit" type="submit">register</button>
+                    <button type="submit" name="toggle-task" class="toggle-task">undo</button>
                   </form>
-                </div>
-                
-                {% if errors %}
-                    <div style="color:red" class="validation-error">{{errors}}</div>
+                {% else %}
+                  <div class="tasks-list-item">
+                  <h2><span class="task-title">{{task.title}}</span></h2>
+                  <h3><span class="task-description"><i>{{task.description}}</i></span></h3>
+                  <form action='/task/toggle/{{task.id}}' method="POST">
+                    {% csrf_token %}
+                    <button type="submit" name="toggle-task" class="toggle-task">complete</button>
+                  </form>
                 {% endif %}
-                
-            {% else %}
-            <h1>Welcome, {{request.user.first_name}}</h1>
-    
-      <div id="new-task-form">
-        <form action="/task/create" method="POST" class="create-task">
-          {% csrf_token %}
-          <h2>new task </h2>
-          {{new_task}}
-          <button type="submit" class="create-task-submit">add task ;</button>
-        </form>
-      </div>
-
-    
-      <div>
-        {% if tasks %}
-          {% for task in tasks %}
-            {% if task.isComplete %}
-              <div class="tasks-list-item complete-task">
-              <h2><span class="task-title"><s>{{task.title}}</s> ;</span></h2>
-              <h3><span class="task-description"><s><i>{{task.description}}</i></s></span></h3>
-              <form action='/task/toggle/{{task.id}}' method="POST">
-                {% csrf_token %}
-                <button type="submit" name="toggle-task" class="toggle-task">undo ;</button>
-              </form>
-            {% else %}
-              <div class="tasks-list-item">
-              <h2><span class="task-title">{{task.title}}</span></h2>
-              <h3><span class="task-description"><i>{{task.description}}</i></span></h3>
-              <form action='/task/toggle/{{task.id}}' method="POST">
-                {% csrf_token %}
-                <button type="submit" name="toggle-task" class="toggle-task">complete ;</button>
-              </form>
-            {% endif %}
                 {% if task.owner == user %}
                   <form action='/task/delete/{{task.id}}' method="POST">
                     {% csrf_token %}
-                    <button type="submit" name="delete-task" class="delete-task">delete ;</button>
+                    <button type="submit" name="delete-task" class="delete-task">delete</button>
                   </form>
+                  </div>
                 {% endif %}
-              </div>
-          {% endfor %}
-          
-          {% else %}
-            <h2>no tasks to show ;</h2>
+              {% endfor %}
+              
+            <!--No tasks -->
+            {% else %}
+              <h2>no tasks to show</h2>
+            {% endif %}
+            
           {% endif %}
-        {% endif %}
-        <a href='/logout' class='logout'>Logout</a>
+          <a href='/logout' class='logout'>Logout</a>
        </div>
     </body>
 </html>
