@@ -71,26 +71,26 @@ input:focus {
 #taskDisplay button{
   position: relative;
   top: -0px;
-  left: -525px;
+  left: -475px;
   background: #e74c3c;
   border-radius:7px;
   color:white;
   margin: 5px;
 }
 
-.inputUserIcon {
-  position:absolute;
-  top:68px;
-  right: 80px;
-  color:white;
-}
+/*.inputUserIcon {*/
+/*  position:absolute;*/
+/*  top:68px;*/
+/*  right: 80px;*/
+/*  color:white;*/
+/*}*/
 
-.inputPassIcon {
-  position:absolute;
-  top:136px;
-  right: 80px;
-  color:white;
-}
+/*.inputPassIcon {*/
+/*  position:absolute;*/
+/*  top:136px;*/
+/*  right: 80px;*/
+/*  color:white;*/
+/*}*/
 
 input::-webkit-input-placeholder {
   color: white;
