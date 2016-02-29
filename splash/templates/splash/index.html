@@ -4,10 +4,20 @@
 <html>
     <head>
        <title>CPSC113 Todo</title>
-       <h1>Social-Todo-App 2</h1>
-        <h3>By Gordon<h3>
+       <style>
+        body {
+            background-color: linen;
+        }
+        
+        h1 {
+            color: maroon;
+            margin-left: 40px;
+        } 
+    </style>
     </head>
     <body>
+      <h1>Social-Todo-App 2</h1>
+        <h3>By Gordon<h3>
         <a href='/logout' class='logout'></a>
         
         <!--Log In Page -->
@@ -55,9 +65,9 @@
               {% for task in tasks %}
                 {% if task.isComplete %}
                   <div class="tasks-list-item complete-task">
-                  <h2><span class="task-title"><s>{{task.title}}</s> ;</span></h2>
+                  <h2><span class="task-title"><s>{{task.title}}</s>  TASK COMPLETED</span></h2>
                   <h3><span class="task-description"><s><i>{{task.description}}</i></s></span></h3>
-                  <form action='/tasks/toggle/{{task.id}}' method="POST">
+                  <form action='/tasks/toggle/{{task.id}}/' method="POST">
                     {% csrf_token %}
                     <button type="submit" name="toggle-task" class="toggle-task">undo</button>
                   </form>
@@ -65,7 +75,7 @@
                   <div class="tasks-list-item">
                   <h2><span class="task-title">{{task.title}}</span></h2>
                   <h3><span class="task-description"><i>{{task.description}}</i></span></h3>
-                  <form action='/tasks/toggle/{{task.id}}' method="POST">
+                  <form action='/tasks/toggle/{{task.id}}/' method="POST">
                     {% csrf_token %}
                     <button type="submit" name="toggle-task" class="toggle-task">complete</button>
                   </form>

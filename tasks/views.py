@@ -39,4 +39,11 @@ def deleteTask(request, task_id):
 def toggleTask(request, task_id):
     if request.method == 'POST':
         task = Task.objects.get(id = task_id)
-        if task.c
+        print task.isComplete
+        if task.isComplete:
+            task.isComplete = False
+        else:
+            task.isComplete = True
+        task.save()
+    
+    return HttpResponseRedirect('/')
