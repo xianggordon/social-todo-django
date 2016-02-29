@@ -1,19 +1,13 @@
 <!--splash/index -->
-{% load staticfiles %}
 <!DOCTYPE html>
+
+<!--css-->
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'splash/style.css' %}" />
+
 <html>
     <head>
-       <title>CPSC113 Todo</title>
-       <style>
-        body {
-            background-color: linen;
-        }
-        
-        h1 {
-            color: maroon;
-            margin-left: 40px;
-        } 
-    </style>
+      <title>CPSC113 Todo</title>
     </head>
     <body>
       <h1>Social-Todo-App 2</h1>
@@ -36,7 +30,7 @@
               {% csrf_token %}
               <h2>Create an account</h2>
               <table>
-                {{register.as_table}}
+                {{register}}
               </table>      
               <button class="sign-up-submit" type="submit">register</button>
             </form>
@@ -49,18 +43,18 @@
         <!--Logged in, Task Page -->
         {% else %}
           <h1>Welcome, {{request.user.first_name}}</h1>
-    
+          
           <div id="new-task-form">
             <form action="/tasks/newTask" method="POST" class="create-task">
               {% csrf_token %}
-              <h2>new task </h2>
+              <h2>New Task </h2>
               {{new_task}}
               <button type="submit" class="create-task-submit">add task</button>
             </form>
           </div>
           
-          <div>
-          <!--tasks -->
+            <div id="taskDisplay">
+            <!--tasks -->
             {% if tasks %}
               {% for task in tasks %}
                 {% if task.isComplete %}
@@ -88,14 +82,17 @@
                   </div>
                 {% endif %}
               {% endfor %}
-              
+            </div>
             <!--No tasks -->
             {% else %}
               <h2>no tasks to show</h2>
             {% endif %}
             
           {% endif %}
-          <a href='/logout' class='logout'>Logout</a>
+          
+          {% if user.is_authenticated %}
+            <a href='/logout' class='logout'>Logout</a>
+          {% endif %}
        </div>
     </body>
 </html>
