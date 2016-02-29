@@ -57,7 +57,7 @@
                   <div class="tasks-list-item complete-task">
                   <h2><span class="task-title"><s>{{task.title}}</s> ;</span></h2>
                   <h3><span class="task-description"><s><i>{{task.description}}</i></s></span></h3>
-                  <form action='/task/toggle/{{task.id}}' method="POST">
+                  <form action='/tasks/toggle/{{task.id}}' method="POST">
                     {% csrf_token %}
                     <button type="submit" name="toggle-task" class="toggle-task">undo</button>
                   </form>
@@ -65,13 +65,13 @@
                   <div class="tasks-list-item">
                   <h2><span class="task-title">{{task.title}}</span></h2>
                   <h3><span class="task-description"><i>{{task.description}}</i></span></h3>
-                  <form action='/task/toggle/{{task.id}}' method="POST">
+                  <form action='/tasks/toggle/{{task.id}}' method="POST">
                     {% csrf_token %}
                     <button type="submit" name="toggle-task" class="toggle-task">complete</button>
                   </form>
                 {% endif %}
                 {% if task.owner == user %}
-                  <form action='/task/delete/{{task.id}}' method="POST">
+                  <form action='/tasks/delete/{{task.id}}/' method="POST">
                     {% csrf_token %}
                     <button type="submit" name="delete-task" class="delete-task">delete</button>
                   </form>

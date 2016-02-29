@@ -24,14 +24,19 @@ def newTask(request):
             if User.objects.filter(username=data['collaborator1']).exists():
                 newTask.collaborators.add(User.objects.get(username=data['collaborator1']))
             if User.objects.filter(username=data['collaborator2']).exists():
-                newTask.collaborators.add(User.objects.get(username=data['collaborator1']))
+                newTask.collaborators.add(User.objects.get(username=data['collaborator2']))
             if User.objects.filter(username=data['collaborator3']).exists():
-                newTask.collaborators.add(User.objects.get(username=data['collaborator1']))
+                newTask.collaborators.add(User.objects.get(username=data['collaborator3']))
                 
     return HttpResponseRedirect('/')  
 
-def delete(request, task_id):
+def deleteTask(request, task_id):
     if request.method == 'POST':
         Task.objects.get(id = task_id).delete()
 
     return HttpResponseRedirect('/')
+
+def toggleTask(request, task_id):
+    if request.method == 'POST':
+        task = Task.objects.get(id = task_id)
+        if task.c
